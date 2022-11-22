@@ -23,6 +23,7 @@ from collections.abc import MutableMapping
 from numbers import Integral, Number
 from xml.etree import ElementTree
 
+import matplotlib as mpl
 import matplotlib.cm as mcm
 import matplotlib.colors as mcolors
 import numpy as np
@@ -2742,8 +2743,11 @@ def _init_cmap_database():
     """
     # WARNING: Skip over the matplotlib native duplicate entries
     # with suffixes '_r' and '_shifted'.
-    attr = '_cmap_registry' if hasattr(mcm, '_cmap_registry') else 'cmap_d'
-    database = getattr(mcm, attr)
+    attr = '_cmap_registry'
+    if hasattr(mcm, '_cmap_registry'):
+        database = getattr(mcm, attr)
+    else:
+        database = getattr(mpl, 'colormaps')
     if mcm.get_cmap is not _get_cmap:
         mcm.get_cmap = _get_cmap
     if mcm.register_cmap is not _register_cmap:
