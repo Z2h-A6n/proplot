@@ -888,7 +888,7 @@ class Figure(mfigure.Figure):
         """
         Get a renderer at all costs. See matplotlib's tight_layout.py.
         """
-        if self._cachedRenderer:
+        if hasattr(self, '_cachedRenderer') and self._cachedRenderer:
             renderer = self._cachedRenderer
         else:
             canvas = self.canvas
